@@ -22,8 +22,11 @@ uvicorn==0.24.0
 
 # Utils
 pydantic
+pydantic-settings>=2.0.0
 requests
 python-dotenv>=1.0.1
+
+
 click>=8.1.7
 rich>=13.8.0
 openai

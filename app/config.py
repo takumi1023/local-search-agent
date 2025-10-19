@@ -20,7 +20,7 @@
 # app/config.py
 
 import os
-from pydantic import BaseSettings
+from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
     openai_api_key: str = os.getenv("OPENAI_API_KEY")
