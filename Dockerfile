@@ -7,11 +7,10 @@ RUN pip install --upgrade pip && pip install -r requirements.txt
 
 # Dockerfile snippet
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-
-
-RUN langchain \
-    langchain-llama \
+# Install required Python packages
+RUN pip install --no-cache-dir \
+    langchain \
+    langchain-ollama \
     langchain-embeddings \
     openai \
     chromadb \
