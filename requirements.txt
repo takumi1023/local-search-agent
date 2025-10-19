@@ -1,10 +1,11 @@
 # Core
 langchain==0.2.12
-langchain-community>=0.2.11
-langgraph>=0.2.26
+langchain-community==0.2.11
+langgraph==0.2.26
 
 # Vector DB
 chromadb>=0.5.4
+langchain_chroma>=0.0.7  # add this line
 
 # Local models
 ollama>=0.3.0
@@ -13,7 +14,6 @@ ollama>=0.3.0
 python-dotenv>=1.0.1
 click>=8.1.7
 rich>=13.8.0
-
 
 fastapi==0.111.0
 uvicorn==0.24.0
