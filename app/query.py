@@ -44,7 +44,7 @@
 
 # app/query.py
 
-f# app/query.py
+# app/query.py
 
 from langchain_community.chains import RetrievalQA
 from langchain_chroma import Chroma
