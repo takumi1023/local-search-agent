@@ -1,0 +1,11 @@
+# Diffusion Models (Quick Notes)
+
+Diffusion models are generative models that learn to reverse a gradual noising process.
+
+- Forward process: add Gaussian noise step-by-step until data becomes nearly pure noise.
+- Reverse process: learn denoising steps to reconstruct data from noise.
+- Trained via variational bounds or simplified losses predicting noise.
+- Popular variants: DDPM, DDIM, latent diffusion (Stable Diffusion).
+- Strengths: high-quality samples, stable training; trade-offs: sampling steps can be slow.
+
+Key idea: parameterize the noise (or velocity) at each timestep and iteratively denoise.
