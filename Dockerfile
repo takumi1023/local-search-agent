@@ -10,6 +10,14 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 
+RUN langchain \
+    langchain-llama \
+    langchain-embeddings \
+    openai \
+    chromadb \
+    fastapi \
+    uvicorn
+
 COPY . /app
 
 EXPOSE 10000

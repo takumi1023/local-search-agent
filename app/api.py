@@ -2,7 +2,7 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 import os
-from src.graph import run_query  # assumes your workflow function
+from app.graph import run_query  # assumes your workflow function
 
 app = FastAPI()
 
