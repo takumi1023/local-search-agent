@@ -14,3 +14,8 @@ python-dotenv>=1.0.1
 click>=8.1.7
 rich>=13.8.0
 
+
+fastapi==0.111.0
+uvicorn==0.24.0
+chromadb==0.4.0
+langgraph==0.1.0
