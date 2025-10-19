@@ -1,7 +1,13 @@
 # Core
-langchain==0.2.12
-langchain-community==0.2.11
+langchain>=0.2.16,<0.3.0
+langchain-community>=0.2.16,<0.3.0
 langgraph==0.2.26
+langchain-core
+langchain-text-splitters
+
+langchainhub
+pydantic
+requests
 
 # Vector DB
 chromadb>=0.5.4
