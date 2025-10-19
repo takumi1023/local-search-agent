@@ -28,3 +28,7 @@ while True:
     print("\nAnswer:", result["result"])
 
 
+def query_chroma(query_text):
+    # your existing Chroma logic here
+    return "Sample result for: " + query_text
+
