@@ -44,15 +44,16 @@
 
 # app/query.py
 
-from langchain.chains import RetrievalQA
-from langchain_community.vectorstores import Chroma
-from langchain_community.embeddings import OpenAIEmbeddings
-from langchain_community.llms import OpenAI
+f# app/query.py
+
+from langchain_community.chains import RetrievalQA
+from langchain_chroma import Chroma
+from langchain_ollama import OllamaEmbeddings, OllamaLLM
 
 from .config import settings
 
 # Load embeddings and vector store
-embeddings = OpenAIEmbeddings(openai_api_key=settings.openai_api_key)
+embeddings = OllamaEmbeddings(model=settings.ollama_model)
 db = Chroma(
     persist_directory=".chroma",
     embedding_function=embeddings,
@@ -62,18 +63,16 @@ retriever = db.as_retriever(search_kwargs={"k": 5})
 
 # Create QA chain
 qa = RetrievalQA.from_chain_type(
-    llm=OpenAI(model_name="gpt-3.5-turbo", openai_api_key=settings.openai_api_key),
+    llm=OllamaLLM(model=settings.ollama_model),
     chain_type="stuff",
     retriever=retriever,
     return_source_documents=True,
 )
 
-# Query function
-def query_chroma(query_text):
+def query_chroma(query_text: str):
     result = qa.invoke({"query": query_text})
     return result["result"]
 
-# Only run interactive loop if executed directly
 if __name__ == "__main__":
     while True:
         query = input("\nEnter your question (or 'exit' to quit): ")

@@ -20,10 +20,11 @@ RUN pip install --upgrade pip
 RUN pip install --no-cache-dir \
     langchain \
     langchain-ollama \
-    openai \
+    langchain-community \
     chromadb \
     fastapi \
-    uvicorn[standard]
+    uvicorn[standard] \
+    openai
 
 # Expose the port Render uses
 EXPOSE 10000

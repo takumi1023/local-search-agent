@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Query
-from app.chroma_wrapper import get_answer
+from app.query import query_chroma
 
 app = FastAPI(title="Local Search Agent (Render Free)")
 
@@ -9,4 +9,4 @@ def home():
 
 @app.get("/search")
 def search(q: str = Query(..., description="Search query")):
-    return {"query": q, "result": get_answer(q)}
+    return {"query": q, "result": query_chroma(q)}

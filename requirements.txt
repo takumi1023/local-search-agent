@@ -9,7 +9,7 @@ langchain_chroma>=0.0.7  # add this line
 
 # Local models
 ollama>=0.3.0
-langchain_ollama>=0.1.3   # add this line
+langchain_ollama==0.1.3   # add this line
 
 # Utilities
 python-dotenv>=1.0.1
@@ -18,4 +18,4 @@ rich>=13.8.0
 
 fastapi==0.111.0
 uvicorn==0.24.0
-    
+openai
