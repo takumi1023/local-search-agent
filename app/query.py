@@ -1,16 +1,18 @@
 # app/query.py
 
 from langchain.chains import RetrievalQA
-from langchain_chroma import Chroma
-from langchain_ollama import OllamaEmbeddings
-from langchain_ollama import OllamaLLM
+from langchain.vectorstores import Chroma
+from langchain.embeddings import OllamaEmbeddings
+from langchain.llms import Ollama
 
 from .config import settings
 
-# Load embeddings and vector store
+# Load embeddings
 embeddings = OllamaEmbeddings(model=settings.ollama_model)
+
+# Create vector store (fresh directory to avoid corrupted collection errors)
 db = Chroma(
-    persist_directory=".chroma",
+    persist_directory="/tmp/chroma",  # temporary directory in Render container
     embedding_function=embeddings,
     collection_name=settings.collection_name
 )
@@ -18,18 +20,18 @@ retriever = db.as_retriever(search_kwargs={"k": 5})
 
 # Create QA chain
 qa = RetrievalQA.from_chain_type(
-    llm=OllamaLLM(model=settings.ollama_model),
+    llm=Ollama(model=settings.ollama_model),
     chain_type="stuff",
     retriever=retriever,
     return_source_documents=True,
 )
 
-# Query function (safe to import)
+# Query function
 def query_chroma(query_text):
     result = qa.invoke({"query": query_text})
     return result["result"]
 
-# Only run interactive loop if executed directly
+# Interactive loop if executed directly
 if __name__ == "__main__":
     while True:
         query = input("\nEnter your question (or 'exit' to quit): ")
