@@ -23,8 +23,12 @@ import os
 from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
-    openai_api_key: str = os.getenv("OPENAI_API_KEY")
-    collection_name: str = "local_search_agent"
+    openai_api_key: str
+    ollama_model: str  # <-- Add this line
+    collection_name: str = "default_collection"  # if you have one
+
+    class Config:
+        env_file = ".env"  # optional, for local testing
 
 settings = Settings()
 
