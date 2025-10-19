@@ -46,7 +46,7 @@
 
 # app/query.py
 
-from langchain_community.chains import RetrievalQA
+from langchain.chains import RetrievalQA
 from langchain_chroma import Chroma
 from langchain_ollama import OllamaEmbeddings, OllamaLLM
 
