@@ -23,7 +23,7 @@ COPY . .
 RUN mkdir -p /app/models
 
 # Download GPT4All model during build
-RUN wget -O /app/models/gpt4all-lora-quantized.bin https://gpt4all.io/models/gpt4all-lora-quantized.bin
+RUN wget -O /app/models/gpt4all-lora-quantized.bin https://the-eye.eu/public/AI/models/nomic-ai/gpt4all/gpt4all-lora-quantized.bin
 
 # Expose port
 EXPOSE 8000
