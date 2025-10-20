@@ -83,39 +83,43 @@
 #         print("\nAnswer:", answer)
 
 
+# app/query.py
 from langchain.chains import RetrievalQA
 from langchain.vectorstores import Chroma
-from langchain.embeddings import OpenAIEmbeddings
-from langchain.chat_models import ChatOpenAI
+from langchain.embeddings import SentenceTransformerEmbeddings
+from langchain.llms import GPT4All
+import os
 
-from .config import settings
+# -----------------------------
+# 1. Free embeddings
+# -----------------------------
+embeddings = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
 
-# Load embeddings and vector store using OpenAI
-embeddings = OpenAIEmbeddings(openai_api_key=settings.openai_api_key)
-db = Chroma(
-    persist_directory=".chroma",
-    embedding_function=embeddings,
-    collection_name=settings.collection_name
-)
-retriever = db.as_retriever(search_kwargs={"k": 5})
+# -----------------------------
+# 2. Load Chroma vector DB (local)
+# -----------------------------
+persist_directory = os.path.join(os.getcwd(), "db")
+db = Chroma(persist_directory=persist_directory, embedding_function=embeddings)
 
-# Create QA chain using OpenAI LLM
-qa = RetrievalQA.from_chain_type(
-    llm=ChatOpenAI(model_name="gpt-3.5-turbo", openai_api_key=settings.openai_api_key),
-    chain_type="stuff",
-    retriever=retriever,
-    return_source_documents=True,
-)
+# -----------------------------
+# 3. Create retriever
+# -----------------------------
+retriever = db.as_retriever(search_kwargs={"k": 3})
 
+# -----------------------------
+# 4. Free local LLM (GPT4All)
+# -----------------------------
+llm_model_path = os.path.join(os.getcwd(), "models", "gpt4all-lora-quantized.bin")
+llm = GPT4All(model=llm_model_path, verbose=False)
+
+qa = RetrievalQA.from_chain_type(llm=llm, chain_type="stuff", retriever=retriever)
+
+# -----------------------------
+# 5. Query function
+# -----------------------------
 def query_chroma(query_text: str):
-    result = qa.invoke({"query": query_text})
-    return result["result"]
-
-if __name__ == "__main__":
-    while True:
-        query = input("\nEnter your question (or 'exit' to quit): ")
-        if query.lower() == "exit":
-            break
-        print("Searching...")
-        answer = query_chroma(query)
-        print("\nAnswer:", answer)
+    try:
+        result = qa.run(query_text)
+        return result
+    except Exception as e:
+        return f"Error: {str(e)}"
