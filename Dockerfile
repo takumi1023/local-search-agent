@@ -7,14 +7,21 @@ WORKDIR /app
 # Copy requirements first (for caching)
 COPY requirements.txt .
 
-# Install system dependencies
+# Install system dependencies (including build tools for hnswlib)
 RUN apt-get update && apt-get install -y \
     wget \
     git \
+    build-essential \
+    cmake \
+    g++ \
     && rm -rf /var/lib/apt/lists/*
 
+# Upgrade pip to latest version for better dependency resolution
+RUN pip install --upgrade pip
+
 # Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+# Also allow pip to resolve dependency conflicts automatically
+RUN pip install --use-feature=truststore --use-deprecated=legacy-resolver --no-cache-dir -r requirements.txt
 
 # Copy the rest of the project
 COPY . .
