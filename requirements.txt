@@ -1,32 +1,22 @@
-# Core LangChain
+# Core
+fastapi==0.111.0
+uvicorn==0.24.0
+
+# LangChain and related
 langchain>=0.2.16,<0.3.0
 langchain-community>=0.2.16,<0.3.0
 langchain-core
 langchain-text-splitters
 langchainhub
 
-# Graph orchestration
-langgraph==0.2.26
-
 # Vector DB
 chromadb>=0.5.4
-langchain_chroma>=0.0.7
 
-# Local models
-ollama>=0.3.0
-langchain_ollama==0.1.3
+# OpenAI embeddings & LLM
+openai>=1.0.0
 
-# FastAPI & server
-fastapi==0.111.0
-uvicorn==0.24.0
-
-# Utils
-pydantic
-pydantic-settings>=2.0.0
-requests
+# Utilities
 python-dotenv>=1.0.1
-
-
 click>=8.1.7
 rich>=13.8.0
-openai
+pydantic-settings>=2.12

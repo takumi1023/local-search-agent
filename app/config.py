@@ -19,16 +19,30 @@
 
 # app/config.py
 
-import os
+# import os
+# from pydantic_settings import BaseSettings
+
+# class Settings(BaseSettings):
+#     openai_api_key: str
+#     ollama_model: str = "llama3" # <-- Add this line
+#     collection_name: str = "local-research-agent"  # if you have one
+
+#     class Config:
+#         env_file = ".env"  # optional, for local testing
+
+# settings = Settings()
+
 from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
-    openai_api_key: str
-    ollama_model: str  # <-- Add this line
-    collection_name: str = "default_collection"  # if you have one
+    openai_api_key: str  # must be set as environment variable
+    collection_name: str = "local-research-agent"
 
     class Config:
-        env_file = ".env"  # optional, for local testing
+        env_file = ".env"  # optional local .env file for development
+        env_file_encoding = "utf-8"
 
+# Instantiate settings
 settings = Settings()
+
 
